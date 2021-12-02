@@ -5,9 +5,6 @@
  */
 package AoC.year21;
 
-import AoC.year21.one.DayOne21;
-import AoC.year21.two.DayTwo21;
-
 /**
  *
  * @author simon

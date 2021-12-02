@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AoC.year21.one;
+package AoC.year21;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,6 @@ import java.util.LinkedList;
  */
 public class DayOne21 {
     
-    private int lineCount = 0;
     private LinkedList<String> lines = new LinkedList<>();
     
     /**
@@ -27,7 +26,6 @@ public class DayOne21 {
             File myObj = new File("files/21/01/source.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
-                this.lineCount++;
                 String data = myReader.nextLine();
                 lines.add(data);
             }
@@ -47,7 +45,7 @@ public class DayOne21 {
         int increases = 0;
         int decreases = 0;
         // Loop the lines
-        for(int i = 0 ; i < this.lineCount ; i++) {
+        for(int i = 0 ; i < this.lines.size() ; i++) {
             int currentValue = Integer.parseInt(this.lines.get(i));
             // Escape first time
             if(previous != 0) {
@@ -78,12 +76,12 @@ public class DayOne21 {
         int increases = 0;
         int decreases = 0;
         // Loop the lines, start with on offset of 2
-        for(int i = 2 ; i < this.lineCount ; i++) {
+        for(int i = 2 ; i < this.lines.size() ; i++) {
             // Calculate the current size
             int currentSize = 
-                    Integer.parseInt(this.lines.get(i-2)) +
-                    Integer.parseInt(this.lines.get(i-1)) +
-                    Integer.parseInt(this.lines.get(i));
+                Integer.parseInt(this.lines.get(i-2)) +
+                Integer.parseInt(this.lines.get(i-1)) +
+                Integer.parseInt(this.lines.get(i));
             // Escape first time 
            if(previous != 0) {
                 // check if it is a increase or decrease, skip duplicate sizes

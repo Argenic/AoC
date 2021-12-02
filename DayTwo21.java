@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AoC.year21.two;
+package AoC.year21;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,6 @@ import java.util.LinkedList;
  */
 public class DayTwo21 {
     
-    private int lineCount = 0;
     private LinkedList<String> lines = new LinkedList<>();
     
     /**
@@ -27,7 +26,6 @@ public class DayTwo21 {
             File myObj = new File("files/21/02/source.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
-                this.lineCount++;
                 String data = myReader.nextLine();
                 lines.add(data);
             }
@@ -39,14 +37,14 @@ public class DayTwo21 {
     }
     
     /**
-     * First part of day one.
+     * First part of day two.
      */
     public void partOne() {
         // Setup some vars
         int depth = 0;
         int position = 0;
         // Loop the lines
-        for(int i = 0 ; i < this.lineCount ; i++) {
+        for(int i = 0 ; i < this.lines.size() ; i++) {
             String currentValue = this.lines.get(i);
             String[] instruction = currentValue.split(" ");
             String operator = instruction[0];
@@ -77,7 +75,7 @@ public class DayTwo21 {
     }
     
     /**
-     * Second part of day one.
+     * Second part of day two.
      */
     public void partTwo() {
         // Setup some vars
@@ -85,7 +83,7 @@ public class DayTwo21 {
         int position = 0;
         int aim = 0;
         // Loop the lines
-        for(int i = 0 ; i < this.lineCount ; i++) {
+        for(int i = 0 ; i < this.lines.size() ; i++) {
             String currentValue = this.lines.get(i);
             String[] instruction = currentValue.split(" ");
             String operator = instruction[0];
@@ -109,14 +107,10 @@ public class DayTwo21 {
         // Calculate the resulting 'number'
         int result = depth * position;
         // Present the awnser.
-        // Present the awnser.
         System.out.println(
             "2021 Day Two - Part Two = Depth:" + depth + 
             " * Position:" + position +
             " = " + result
-        );
-        System.out.println(
-            
         );
     }
 }
