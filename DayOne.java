@@ -13,14 +13,14 @@ import java.util.LinkedList;
  *
  * @author simon
  */
-public class DayOne21 {
+public class DayOne {
     
     private LinkedList<String> lines = new LinkedList<>();
     
     /**
      * Setup day one.
      */
-    public DayOne21() {
+    public DayOne() {
         try {
             //File myObj = new File("files/21/01/sample.txt");
             File myObj = new File("files/21/01/source.txt");
@@ -45,8 +45,8 @@ public class DayOne21 {
         int increases = 0;
         int decreases = 0;
         // Loop the lines
-        for(int i = 0 ; i < this.lines.size() ; i++) {
-            int currentValue = Integer.parseInt(this.lines.get(i));
+        for(String line : lines) {
+            int currentValue = Integer.parseInt(line);
             // Escape first time
             if(previous != 0) {
                 // check if it is a increase or decrease

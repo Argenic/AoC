@@ -13,14 +13,14 @@ import java.util.LinkedList;
  *
  * @author simon
  */
-public class DayTwo21 {
+public class DayTwo {
     
     private LinkedList<String> lines = new LinkedList<>();
     
     /**
-     * Setup day one.
+     * Setup day two.
      */
-    public DayTwo21() {
+    public DayTwo() {
         try {
             //File myObj = new File("files/21/02/sample.txt");
             File myObj = new File("files/21/02/source.txt");
@@ -44,9 +44,8 @@ public class DayTwo21 {
         int depth = 0;
         int position = 0;
         // Loop the lines
-        for(int i = 0 ; i < this.lines.size() ; i++) {
-            String currentValue = this.lines.get(i);
-            String[] instruction = currentValue.split(" ");
+        for(String line : lines) {
+            String[] instruction = line.split(" ");
             String operator = instruction[0];
             int value = Integer.parseInt(instruction[1]);
             // Decide the action based on the operator
@@ -83,9 +82,8 @@ public class DayTwo21 {
         int position = 0;
         int aim = 0;
         // Loop the lines
-        for(int i = 0 ; i < this.lines.size() ; i++) {
-            String currentValue = this.lines.get(i);
-            String[] instruction = currentValue.split(" ");
+        for(String line : lines) {
+            String[] instruction = line.split(" ");
             String operator = instruction[0];
             int value = Integer.parseInt(instruction[1]);
             // Decide the action based on the operator
