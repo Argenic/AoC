@@ -119,8 +119,6 @@ public class DayThree {
             // Decide on which list
             if(zeroes.size() > ones.size()) {
                 scrubberList = ones;
-            } else if(zeroes.size() < ones.size()){
-                scrubberList = zeroes;
             } else {
                 scrubberList = zeroes;
             }
@@ -128,7 +126,6 @@ public class DayThree {
         // Process results
         int generator = Integer.parseInt(generatorList.getFirst(), 2);
         int scrubber = Integer.parseInt(scrubberList.getFirst(), 2);
-        
         System.out.println(
             "2021 Day Three - Part Two = Generator:" + generator + 
             " * Scrubber:" + scrubber +
