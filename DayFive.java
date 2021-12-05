@@ -9,9 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
 /**
  *
  * @author simon
@@ -45,45 +42,49 @@ public class DayFive {
     public void partOne() {
         // Setup some vars
         int[][] map = new int[1000][1000];
-        int score = 0;
         for(String line : lines) {
             // Split start and end
             String[] parts = line.split(" -> ");
-            String[] startCoords = parts[0].split(",");
-            String[] endCoords = parts[1].split(",");
-            // Filter out diagonals
-            if(startCoords[0].equals(endCoords[0]) || startCoords[1].equals(endCoords[1])) {
-                int x1 = Integer.parseInt(startCoords[0]);
-                int y1 = Integer.parseInt(startCoords[1]);
-                int x2 = Integer.parseInt(endCoords[0]);
-                int y2 = Integer.parseInt(endCoords[1]);
-                int startX = 0;
-                int endX = 0;
-                int startY = 0;
-                int endY = 0;
-                // Decide start / end based on which one is higher.
-                if (x1 > x2) {
-                    startX = x2;
-                    endX = x1;
-                } else {
-                    startX = x1;
-                    endX = x2;
-                }
-                if (y1 > y2) {
-                    startY = y2;
-                    endY = y1;
-                } else {
-                    startY = y1;
-                    endY = y2;
-                }
-                // Draw lines
-                for(int i = startX ; i <= endX ; i++) {
-                    for (int j = startY ; j <= endY ; j++) {
-                        map[i][j]++;
-                    }
-                }
-            }
+            String[] startString = parts[0].split(",");
+            String[] endString = parts[1].split(",");
+            int[] startCoords = new int[]{Integer.parseInt(startString[0]),Integer.parseInt(startString[1])};
+            int[] endCoords = new int[]{Integer.parseInt(endString[0]), Integer.parseInt(endString[1])};
+            map = drawStraightLine(map, startCoords, endCoords);            
         }
+        // Present the awnser.
+        System.out.println(
+            "2021 Day Five - Part One = Score : " + countScore(map)
+        );
+    }
+    
+    /**
+     * Second part of day five.
+     */
+    public void partTwo() {        
+        // Setup some vars
+        int[][] map = new int[1000][1000];
+        for(String line : lines) {
+            // Split start and end
+            String[] parts = line.split(" -> ");
+            String[] startString = parts[0].split(",");
+            String[] endString = parts[1].split(",");
+            int[] startCoords = new int[]{Integer.parseInt(startString[0]),Integer.parseInt(startString[1])};
+            int[] endCoords = new int[]{Integer.parseInt(endString[0]), Integer.parseInt(endString[1])};
+            map = drawStraightLine(map, startCoords, endCoords);            
+            map = drawDiagonalLine(map, startCoords, endCoords);
+        }
+        System.out.println(
+            "2021 Day Five - Part Two = Score : " + countScore(map)
+        );
+    }
+    
+    /**
+     * Count the danger zones.
+     * @param map
+     * @return 
+     */
+    private int countScore(int[][] map) {
+        int score = 0;
         // Count result for answer
         for(int i = 0 ; i < map.length ; i++) {
             for(int j = 0 ; j < map[i].length ; j++) {
@@ -92,17 +93,73 @@ public class DayFive {
                 }
             }
         }
-        // Present the awnser.
-        System.out.println(
-            "2021 Day Five - Part One = Score : " + score
-        );
+        return score;
     }
+    
     /**
-     * Second part of day five.
+     * Draw lines on the map
+     * @param map
+     * @param start
+     * @param end
+     * @return 
      */
-    public void partTwo() {
-        System.out.println(
-            "2021 Day Five - Part Two = "
-        );
+    private int[][] drawStraightLine(int[][] map, int[] start, int[] end) {
+        // Filter out diagonals
+        if(start[0] == end[0] || start[1] == end[1]) {
+            // TODO learn some java8 syntax to clean this mess up
+            int startX = 0;
+            int endX = 0;
+            int startY = 0;
+            int endY = 0;
+            // Decide start / end based on which one is higher.
+            if (start[0] > end[0]) {
+                startX = end[0];
+                endX = start[0];
+            } else {
+                startX = start[0];
+                endX = end[0];
+            }
+            if (start[1] > end[1]) {
+                startY = end[1];
+                endY = start[1];
+            } else {
+                startY = start[1];
+                endY = end[1];
+            }
+            // Draw lines
+            for(int i = startX ; i <= endX ; i++) {
+                for (int j = startY ; j <= endY ; j++) {
+                    map[i][j]++;
+                }
+            }
+        }
+        return map;
+    }
+    
+    private int[][] drawDiagonalLine(int[][]map, int[] start, int[] end) {
+        // Filter out straight lines
+        if(start[0] != end[0] && start[1] != end[1]) {
+            int[] begin = null;
+            int[] finish = null;
+            // Check x order to make it easer.
+            if(start[0] > end[0]) {
+                begin = end;
+                finish = start;
+            } else {
+                begin = start;
+                finish = end;
+            }
+            // Loop the x, deduce the corresponding y
+            for(int i = begin[0] ; i <= finish[0] ; i++) {
+                if(begin[1] <= finish[1]) {
+                    // Higher the Y and mark the map
+                    map[i][begin[1]++]++;
+                } else {
+                    // Lower our Y and mark the map
+                    map[i][begin[1]--]++;
+                }
+            }
+        }
+        return map;
     }
 }
