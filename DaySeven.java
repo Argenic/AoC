@@ -58,14 +58,14 @@ public class DaySeven {
      */
     public void partTwo() {   
         int[] startingValues = generateValues();
-        // Hackzors?! below grounds, so 0 is considered a move?! Must be doing wrong somewhere...
-        int needle = -1;
+        int needle = 0;
         for(int value : startingValues) {
             needle += value;
         }
-        needle = (int) Math.round((double) needle / startingValues.length);
+        // Rounding thingy?! Didnt write this out on paper
+        needle = (int) Math.floor((double) needle / startingValues.length);
         System.out.println(
-            "2021 Day Seven - Part Two = Fuel needed : " + calculateScorePartTwo(startingValues, needle - 1)
+            "2021 Day Seven - Part Two = Fuel needed : " + calculateScorePartTwo(startingValues, needle)
         );
     }
     
