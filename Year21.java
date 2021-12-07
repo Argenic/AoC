@@ -12,9 +12,6 @@ package AoC.year21;
 public class Year21 {
 
     public void execute() {
-        /**
-        * 
-        */
         // One
         DayOne one = new DayOne();
         one.partOne();
@@ -44,5 +41,10 @@ public class Year21 {
         DaySix six = new DaySix();
         six.partOne();
         six.partTwo();
+        
+        // Seven
+        DaySeven seven = new DaySeven();
+        seven.partOne();
+        seven.partTwo();
     }
 }

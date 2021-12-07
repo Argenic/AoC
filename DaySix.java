@@ -40,31 +40,8 @@ public class DaySix {
      * First part of day six.
      */
     public void partOne() {
-        String line = lines.getFirst();
-        String[] instructions = line.split(",");
-        int[] birdsPerDay = new int[9];
-        for(int i = 0 ; i < instructions.length ; i++) {
-            int instruction = Integer.parseInt(instructions[i]);
-            birdsPerDay[instruction]++;
-        }
-        for(int i = 0 ; i < 80 ; i++){
-            int[] newBirdsPerDay = new int[9];
-            // Handle day to day business
-            for(int j = 1 ; j < birdsPerDay.length ; j++) {
-                newBirdsPerDay[j - 1] = birdsPerDay[j];
-            }
-            // Handle day 0
-            newBirdsPerDay[8] = birdsPerDay[0];
-            newBirdsPerDay[6] += birdsPerDay[0];
-            birdsPerDay = newBirdsPerDay;
-        }
-        int count = 0;
-        for(int j = 0 ; j < birdsPerDay.length ; j++) {
-            count += birdsPerDay[j];
-        }
-        // Present the awnser.
         System.out.println(
-            "2021 Day Six - Part One = Amount of birds : " + count
+            "2021 Day Six - Part One = Amount of birds : " + birdsOnDay(80)
         );
     }
     
@@ -72,6 +49,12 @@ public class DaySix {
      * Second part of day six.
      */
     public void partTwo() {   
+        System.out.println(
+            "2021 Day Six - Part Two = Amount of birds : " + birdsOnDay(256)
+        );
+    }
+    
+    private long birdsOnDay(int days) {
         String line = lines.getFirst();
         String[] instructions = line.split(",");
         // Integer overloading took me a while over here -_-
@@ -80,7 +63,7 @@ public class DaySix {
             int instruction = Integer.parseInt(instructions[i]);
             birdsPerDay[instruction]++;
         }
-        for(int i = 0 ; i < 256 ; i++){
+        for(int i = 0 ; i < days ; i++){
             long[] newBirdsPerDay = new long[9];
             // Handle day to day business
             for(int j = 1 ; j < birdsPerDay.length ; j++) {
@@ -96,8 +79,6 @@ public class DaySix {
             // Strange casting that could be smarter..
             count += birdsPerDay[j];
         }
-        System.out.println(
-            "2021 Day Six - Part Two = Amount of birds : " + count
-        );
+        return count;
     }
 }
