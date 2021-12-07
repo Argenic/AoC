@@ -57,10 +57,17 @@ public class DaySeven {
      * Second part of day seven.
      */
     public void partTwo() {   
+        int[] startingValues = generateValues();
+        // Hackzors?! below grounds, so 0 is considered a move?! Must be doing wrong somewhere...
+        int needle = -1;
+        for(int value : startingValues) {
+            needle += value;
+        }
+        needle = (int) Math.round((double) needle / startingValues.length);
         System.out.println(
-            "2021 Day Seven - Part Two = "
+            "2021 Day Seven - Part Two = Fuel needed : " + calculateScorePartTwo(startingValues, needle - 1)
         );
-    }    
+    }
     
     private int[] generateValues() {
         String[] stringValues = lines.getFirst().split(",");
@@ -70,5 +77,26 @@ public class DaySeven {
         }
         Arrays.sort(startingValues);
         return startingValues;
+    }
+    
+    private int calculateScorePartTwo(int[] startingValues, int needle) {
+        int fuelCount = 0;
+        for(int value : startingValues) {
+            int min = 0;
+            int max = 0;
+            if(value < needle) {
+                min = value;
+                max = needle;
+            } else {
+                min = needle;
+                max = value;
+            }
+            int counter = 0;
+            for(int i = min ; i < max ; i++) {
+                counter++;
+                fuelCount += counter;
+            }
+        }
+        return fuelCount;
     }
 }
