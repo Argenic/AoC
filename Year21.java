@@ -46,5 +46,10 @@ public class Year21 {
         DaySeven seven = new DaySeven();
         seven.partOne();
         seven.partTwo();
+        
+        // Eight
+        DayEight eight = new DayEight();
+        eight.partOne();
+        eight.partTwo();
     }
 }

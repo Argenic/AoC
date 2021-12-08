@@ -24,8 +24,8 @@ public class DaySeven {
      */
     public DaySeven() {
         try {
-            //File myObj = new File("files/21/07/sample.txt");
-            File myObj = new File("files/21/07/source.txt");
+            File myObj = new File("files/21/07/sample.txt");
+            //File myObj = new File("files/21/07/source.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -42,7 +42,7 @@ public class DaySeven {
      * First part of day seven.
      */
     public void partOne() {
-        int[] startingValues = generateValues();
+        int[] startingValues = generateValues(false);
         int median = startingValues[startingValues.length/2];
         int fuelCount = 0;
         for(int value : startingValues) {
@@ -57,23 +57,27 @@ public class DaySeven {
      * Second part of day seven.
      */
     public void partTwo() {   
-        int[] startingValues = generateValues();
+        int[] startingValues = generateValues(true);
         int needle = 0;
         for(int value : startingValues) {
             needle += value;
         }
         // Rounding thingy?! Didnt write this out on paper
-        needle = (int) Math.floor((double) needle / startingValues.length);
+        needle = (int) Math.round((double) needle / startingValues.length);
         System.out.println(
             "2021 Day Seven - Part Two = Fuel needed : " + calculateScorePartTwo(startingValues, needle)
         );
     }
     
-    private int[] generateValues() {
+    private int[] generateValues(boolean p2) {
         String[] stringValues = lines.getFirst().split(",");
         int[] startingValues = new int[stringValues.length];
         for(int i = 0 ; i < stringValues.length ; i++) {
-            startingValues[i] = Integer.parseInt(stringValues[i]);
+            if(p2) {
+                startingValues[i] = Integer.parseInt(stringValues[i]) + 1;
+            } else {
+               startingValues[i] = Integer.parseInt(stringValues[i]);
+            }
         }
         Arrays.sort(startingValues);
         return startingValues;
