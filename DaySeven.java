@@ -24,8 +24,8 @@ public class DaySeven {
      */
     public DaySeven() {
         try {
-            File myObj = new File("files/21/07/sample.txt");
-            //File myObj = new File("files/21/07/source.txt");
+            //File myObj = new File("files/21/07/sample.txt");
+            File myObj = new File("files/21/07/source.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -63,7 +63,7 @@ public class DaySeven {
             needle += value;
         }
         // Rounding thingy?! Didnt write this out on paper
-        needle = (int) Math.round((double) needle / startingValues.length);
+        needle = (int) Math.floor((double) needle / startingValues.length);
         System.out.println(
             "2021 Day Seven - Part Two = Fuel needed : " + calculateScorePartTwo(startingValues, needle)
         );
