@@ -169,7 +169,6 @@ public class DayEight {
                     }
                 }                
             }
-            System.out.println(finalValue);
             count += Integer.parseInt(finalValue);
         }
         System.out.println(
