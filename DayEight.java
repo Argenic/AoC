@@ -42,7 +42,6 @@ public class DayEight {
     public void partOne() {
         // Setup some vars
         int count = 0;
-        List outputValues = new ArrayList<String>();
         for(String line : lines) {
             String[] values = line.split(" \\| ");
             for(String number : values[1].split(" ")) {
@@ -68,7 +67,6 @@ public class DayEight {
         
         // Setup some vars
         int count = 0;
-        List outputValues = new ArrayList<String>();
         for(String line : lines) {
             String[] values = line.split(" \\| ");
             String[] knownValues = new String[10];
