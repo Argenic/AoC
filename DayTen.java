@@ -14,8 +14,10 @@ import java.util.*;
  */
 public class DayTen {
     
-    private LinkedList<String> lines = new LinkedList<>();
-    private List marked = new ArrayList<String>();
+    private ArrayList<String> lines = new ArrayList<>();
+    private int syntaxErrorScore = 0;
+    private ArrayList<Long> autoCompleteScores = new ArrayList<>();
+    private List openingChars = new ArrayList<Character>(Arrays.asList('<', '(', '[', '{'));
     
     /**
      * Setup day ten.
@@ -32,7 +34,6 @@ public class DayTen {
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
-            e.printStackTrace();
         }
     }
     
@@ -40,59 +41,9 @@ public class DayTen {
      * First part of day ten.
      */
     public void partOne() {
-        int count = 0;
-        List openingChars = new ArrayList<Character>(Arrays.asList('<', '(', '[', '{'));
-        LinkedList<Character> openingSequence = new LinkedList<>();
-        for(String line : lines) {
-            char lastOpening = line.charAt(0);
-            for(int i = 1 ; i < line.length() ; i++) {
-                char currentChar = line.charAt(i);
-                if(openingChars.contains(currentChar)) {
-                    openingSequence.push(lastOpening);
-                    lastOpening = currentChar;
-                } else {
-                    boolean stopSignal = false;
-                    switch (currentChar) {
-                        case '>' :
-                            if (lastOpening != '<') {
-                                stopSignal = true;
-                            } else {
-                                lastOpening = openingSequence.pop();
-                            }
-                            break;
-                        case ')' :
-                            if (lastOpening != '(') {
-                                stopSignal = true;
-                            } else {
-                                lastOpening = openingSequence.pop();
-                            }
-                            break;
-                        case ']' :
-                            if (lastOpening != '[') {
-                                stopSignal = true;
-                            } else {
-                                lastOpening = openingSequence.pop();
-                            }
-                            break;
-                        case '}' :
-                            if (lastOpening != '{') {
-                                stopSignal = true;
-                            } else {
-                                lastOpening = openingSequence.pop();
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    if(stopSignal) {
-                        count += getScore(currentChar);
-                        break;
-                    }
-                }
-            }
-        }        
+        filterSyntaxErrors(lines);
         System.out.println(
-            "2021 Day Ten - Part One = Syntax Error Score : " + count
+                "2021 Day Ten - Part One = Syntax Error Score : " + syntaxErrorScore
         );
     }
     
@@ -100,26 +51,96 @@ public class DayTen {
      * Second part of day ten.
      */
     public void partTwo() {
+        Collections.sort(autoCompleteScores);
+        long median = autoCompleteScores.get(autoCompleteScores.size() / 2);
         System.out.println(
-            "2021 Day Ten - Part Two = "
+            "2021 Day Ten - Part Two = Auto complete score : " + median
         );
+    }
+    
+    private ArrayList<String> filterSyntaxErrors (ArrayList<String> errors) {
+        ArrayList<String> validErrors = new ArrayList<>();
+        for(String error : errors) {
+            LinkedList<Character> openingSequence = new LinkedList<>();
+            char lastOpening = error.charAt(0);
+            boolean stopSignal = false;
+            boolean skipBool = true;
+            for(int i = 1 ; i < error.length() ; i++) {
+                char currentChar = error.charAt(i);
+                if(openingChars.contains(currentChar)) {
+                    if(openingSequence.isEmpty() && i > 1 && skipBool) {
+                        skipBool = false;
+                    } else {
+                        openingSequence.push(lastOpening);
+                        skipBool = true;
+                    }
+                    lastOpening = currentChar;
+                } else {
+                    switch (currentChar) {
+                        case '>' -> {
+                            if (lastOpening != '<') {
+                                stopSignal = true;
+                            }
+                        }
+                        case ')' -> {
+                            if (lastOpening != '(') {
+                                stopSignal = true;
+                            }
+                        }
+                        case ']' -> {
+                            if (lastOpening != '[') {
+                                stopSignal = true;
+                            }
+                        }
+                        case '}' -> {
+                            if (lastOpening != '{') {
+                                stopSignal = true;
+                            }
+                        }
+                        default -> {
+                        }
+                    }
+                    if(stopSignal) {
+                        syntaxErrorScore += getScore(currentChar);
+                        break;
+                    } else {
+                        if (openingSequence.size() > 0) {
+                            lastOpening = openingSequence.pop();
+                        }
+                    }
+                }
+            }
+            if(!stopSignal) {
+                openingSequence.push(lastOpening);
+                autoCompleteErrors(openingSequence);
+                validErrors.add(error);
+            }
+        }
+        return validErrors;
+    }
+    
+    private void autoCompleteErrors(LinkedList<Character> openingSequence) {
+        long score = 0;
+        while(!openingSequence.isEmpty()) {
+            char lastOpening = openingSequence.pop();
+            score *= 5;
+            switch (lastOpening) {
+                case '(' -> score += 1;
+                case '[' -> score += 2;
+                case '{' -> score += 3;
+                case '<' -> score += 4;
+            }            
+        }
+        autoCompleteScores.add(score);
     }
     
     private int getScore(char input) {
         int score = 0;
         switch (input) {
-            case ')' :
-                score = 3;
-                break;
-            case ']' :
-                score = 57;
-                break;
-            case '}' :
-                score = 1197;
-                break;
-            case '>' :
-                score = 25137;
-                break;
+            case ')' -> score = 3;
+            case ']' -> score = 57;
+            case '}' -> score = 1197;
+            case '>' -> score = 25137;
         }
         return score;
     }
