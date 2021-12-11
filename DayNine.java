@@ -5,11 +5,9 @@
  */
 package AoC.year21;
 
-import java.lang.Math;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.stream.Collectors;
 /**
  *
  * @author simon
@@ -107,9 +105,7 @@ public class DayNine {
     
     private void buildArea(int[] point, int[][] heightMap) {
         String pointValue = point[0] + "x" + point[1];
-        if(marked.contains(pointValue)) {
-            
-        } else if (heightMap[point[0]][point[1]] < 9) {
+        if(!marked.contains(pointValue) && heightMap[point[0]][point[1]] < 9) {
             marked.add(pointValue);
             // Top
             if(point[0] > 0 && !marked.contains((point[0] - 1) + "x" + point[1])) {
