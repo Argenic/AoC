@@ -1,48 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AoC.year21;
 
-import java.lang.Math;
-import java.io.File;
-import java.io.FileNotFoundException;
+import AoC.Day;
 import java.util.*;
-/**
- *
- * @author simon
- */
-public class DayEight {
+
+public class DayEight extends Day {
+
+    public String fileLocation = "files/21/08/source.txt";
+    //public String fileLocation = "files/21/08/sample.txt";
     
-    private LinkedList<String> lines = new LinkedList<>();
-    
-    /**
-     * Setup day seven.
-     */
-    public DayEight() {
-        try {
-            //File myObj = new File("files/21/08/sample.txt");
-            File myObj = new File("files/21/08/source.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                lines.add(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * First part of day eight.
-     */
     public void partOne() {
-        // Setup some vars
         int count = 0;
-        for(String line : lines) {
+        for(String line : getInput(fileLocation)) {
             String[] values = line.split(" \\| ");
             for(String number : values[1].split(" ")) {
                 if(
@@ -60,14 +28,9 @@ public class DayEight {
         );
     }
     
-    /**
-     * Second part of day eight.
-     */
     public void partTwo() {   
-        
-        // Setup some vars
         int count = 0;
-        for(String line : lines) {
+        for(String line : getInput(fileLocation)) {
             String[] values = line.split(" \\| ");
             String[] knownValues = new String[10];
             String[] fiveDigits = new String[3];
@@ -77,37 +40,20 @@ public class DayEight {
             char topRight = ' ';
             char bottomLeft = ' ';
             String finalValue = "";
-            // Scrape values and set known
             for(String pattern : values[0].split(" ")) {
                 switch (pattern.length()) {
-                    case 2 :
-                        // Filter : 1
+                    case 2 -> // Filter : 1
                         knownValues[1] = sortDigitString(pattern);
-                        break;
-                    case 4 :
-                        // Filter : 4
+                    case 4 -> // Filter : 4
                         knownValues[4] = sortDigitString(pattern);
-                        break;
-                    case 3 : 
-                        // Filter : 7
+                    case 3 -> // Filter : 7
                         knownValues[7] = sortDigitString(pattern);
-                        break;
-                    case 7 :
-                        // Filter : 8
+                    case 7 -> // Filter : 8
                         knownValues[8] = sortDigitString(pattern);
-                        break;
-                    case 5 : 
-                        // Filter : 2, 3, 5
+                    case 5 -> // Filter : 2, 3, 5
                         fiveDigits[fiveCount++] = sortDigitString(pattern);
-                        break;
-                    case 6 :
-                        // Filter : 0, 6, 9
+                    case 6 -> // Filter : 0, 6, 9
                         sixDigits[sixCount++] = sortDigitString(pattern);
-                        break;
-                    default:
-                        // Ah oh,
-                        System.out.println("UNEXPECTED SIGNAL");
-                        break;
                 }
             }
             // Get 6 with the help of 1, create a needle from it,         
@@ -133,7 +79,6 @@ public class DayEight {
                 } else {
                     // 5
                     knownValues[5] = digit;
-                    // Loop 8 to search needle, getting tired...
                     for(int i = 0 ; i < knownValues[8].length() ; i++) {
                         if(
                             !digit.contains(Character.toString(knownValues[8].charAt(i))) &&
@@ -170,7 +115,7 @@ public class DayEight {
             count += Integer.parseInt(finalValue);
         }
         System.out.println(
-            "2021 Day Eight - Part Two = " + count
+            "2021 Day Eight - Part Two = Total output " + count
         );
     }
     

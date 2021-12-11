@@ -1,46 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AoC.year21;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import AoC.Day;
 import java.util.*;
-/**
- *
- * @author simon
- */
-public class DayNine {
+
+public class DayNine extends Day {
+
+    public String fileLocation = "files/21/09/source.txt";
+    //public String fileLocation = "files/21/09/sample.txt";
     
-    private LinkedList<String> lines = new LinkedList<>();
     private List marked = new ArrayList<String>();
     
-    /**
-     * Setup day nine.
-     */
-    public DayNine() {
-        try {
-            //File myObj = new File("files/21/09/sample.txt");
-            File myObj = new File("files/21/09/source.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                lines.add(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * First part of day nine.
-     */
     public void partOne() {
-        // Setup some vars
         int[][] heightMap = buildMap();
         List<int[]> lowPoints = getLowPoints(heightMap);
         int count = 0;
@@ -52,11 +22,7 @@ public class DayNine {
         );
     }
     
-    /**
-     * Second part of day nine.
-     */
     public void partTwo() {
-        // Setup some vars
         int[][] heightMap = buildMap();
         List<int[]> lowPoints = getLowPoints(heightMap);
         List areas = new ArrayList<Integer>();
@@ -75,7 +41,8 @@ public class DayNine {
     }
     
     private int[][] buildMap() {
-        int[][] heightMap = new int[lines.size()][lines.getFirst().length()];
+        ArrayList<String> lines = getInput(fileLocation);
+        int[][] heightMap = new int[lines.size()][lines.get(0).length()];
         for(int i = 0 ; i < lines.size() ; i++) {
             String line = lines.get(i);
             for(int j = 0 ; j < line.length() ; j++) {

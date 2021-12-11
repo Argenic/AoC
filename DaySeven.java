@@ -1,46 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AoC.year21;
 
-import java.lang.Math;
-import java.io.File;
-import java.io.FileNotFoundException;
+import AoC.Day;
 import java.util.Arrays;
-import java.util.Scanner;
-import java.util.LinkedList;
-/**
- *
- * @author simon
- */
-public class DaySeven {
+
+public class DaySeven extends Day {
+
+    public String fileLocation = "files/21/07/source.txt";
+    //public String fileLocation = "files/21/07/sample.txt";
     
-    private LinkedList<String> lines = new LinkedList<>();
-    
-    /**
-     * Setup day seven.
-     */
-    public DaySeven() {
-        try {
-            //File myObj = new File("files/21/07/sample.txt");
-            File myObj = new File("files/21/07/source.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                lines.add(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * First part of day seven.
-     */
     public void partOne() {
         int[] startingValues = generateValues(false);
         int median = startingValues[startingValues.length/2];
@@ -53,16 +20,12 @@ public class DaySeven {
         );
     }
     
-    /**
-     * Second part of day seven.
-     */
     public void partTwo() {   
         int[] startingValues = generateValues(true);
         int needle = 0;
         for(int value : startingValues) {
             needle += value;
         }
-        // Rounding thingy?! Didnt write this out on paper
         needle = (int) Math.floor((double) needle / startingValues.length);
         System.out.println(
             "2021 Day Seven - Part Two = Fuel needed : " + calculateScorePartTwo(startingValues, needle)
@@ -70,7 +33,7 @@ public class DaySeven {
     }
     
     private int[] generateValues(boolean p2) {
-        String[] stringValues = lines.getFirst().split(",");
+        String[] stringValues = getInput(fileLocation).get(0).split(",");
         int[] startingValues = new int[stringValues.length];
         for(int i = 0 ; i < stringValues.length ; i++) {
             if(p2) {

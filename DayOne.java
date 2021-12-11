@@ -1,100 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AoC.year21;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.LinkedList;
-/**
- *
- * @author simon
- */
-public class DayOne {
+import AoC.Day;
+import java.util.*;
+
+public class DayOne extends Day {
     
-    private LinkedList<String> lines = new LinkedList<>();
+    public String fileLocation = "files/21/01/source.txt";
+    //public String fileLocation = "files/21/01/sample.txt";
     
-    /**
-     * Setup day one.
-     */
-    public DayOne() {
-        try {
-            //File myObj = new File("files/21/01/sample.txt");
-            File myObj = new File("files/21/01/source.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                lines.add(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * First part of day one.
-     */
     public void partOne() {
-        // Bunch of vars
         int previous = 0;
         int increases = 0;
-        int decreases = 0;
-        // Loop the lines
-        for(String line : lines) {
+        for(String line : getInput(fileLocation)) {
             int currentValue = Integer.parseInt(line);
-            // Escape first time
             if(previous != 0) {
-                // check if it is a increase or decrease
                 if(currentValue > previous) {
                     increases++;
-                } else if (currentValue < previous) {
-                    decreases++;
-                } else {
-                    System.out.println("Same result, this should not happen.");
                 }
             }
-            // update previous
             previous = currentValue;
         }
-        // Present the awnser.
         System.out.println(
             "2021 Day One - Part One = Total increases : " + increases
         );
     }
     
-    /**
-     * Second part of day one.
-     */
     public void partTwo() {
-        // Bunch of vars
+        ArrayList<String> lines = getInput(fileLocation);
         int previous = 0;
         int increases = 0;
-        int decreases = 0;
-        // Loop the lines, start with on offset of 2
-        for(int i = 2 ; i < this.lines.size() ; i++) {
-            // Calculate the current size
+        for(int i = 2 ; i < lines.size() ; i++) {
             int currentSize = 
-                Integer.parseInt(this.lines.get(i-2)) +
-                Integer.parseInt(this.lines.get(i-1)) +
-                Integer.parseInt(this.lines.get(i));
-            // Escape first time 
+                Integer.parseInt(lines.get(i-2)) +
+                Integer.parseInt(lines.get(i-1)) +
+                Integer.parseInt(lines.get(i));
            if(previous != 0) {
-                // check if it is a increase or decrease, skip duplicate sizes
                 if(currentSize > previous) {
                     increases++;
-                } else if (currentSize < previous) {
-                    decreases++;
                 }
             }
-            // update previous
             previous = currentSize;
         }
-        // Present the awnser.
         System.out.println(
             "2021 Day One - Part Two = Total increases : " + increases
         );

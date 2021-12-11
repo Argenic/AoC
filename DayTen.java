@@ -1,55 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AoC.year21;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import AoC.Day;
 import java.util.*;
-/**
- *
- * @author simon
- */
-public class DayTen {
+
+public class DayTen extends Day {
     
-    private ArrayList<String> lines = new ArrayList<>();
+    public String fileLocation = "files/21/10/source.txt";
+    //public String fileLocation = "files/21/10/sample.txt";
+    
     private int syntaxErrorScore = 0;
     private ArrayList<Long> autoCompleteScores = new ArrayList<>();
     private List openingChars = new ArrayList<Character>(Arrays.asList('<', '(', '[', '{'));
     
-    /**
-     * Setup day ten.
-     */
-    public DayTen() {
-        try {
-            //File myObj = new File("files/21/10/sample.txt");
-            File myObj = new File("files/21/10/source.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                lines.add(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-        }
-    }
-    
-    /**
-     * First part of day ten.
-     */
     public void partOne() {
-        filterSyntaxErrors(lines);
+        filterSyntaxErrors(getInput(fileLocation));
         System.out.println(
                 "2021 Day Ten - Part One = Syntax Error Score : " + syntaxErrorScore
         );
     }
     
-    /**
-     * Second part of day ten.
-     */
     public void partTwo() {
         Collections.sort(autoCompleteScores);
         long median = autoCompleteScores.get(autoCompleteScores.size() / 2);
