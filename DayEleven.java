@@ -15,7 +15,7 @@ public class DayEleven extends Day {
         //printMap();
         for(int i = 0 ; i < 100 ; i++) {
             step();
-            //System.out.println("----------");
+            //System.out.println("-----STEP# " + i + "-----");
             //printMap();
         }
         System.out.println(
@@ -24,8 +24,16 @@ public class DayEleven extends Day {
     }
     
     public void partTwo() {
+        buildMap();
+        boolean singularity = false;
+        int steps = 0;
+        while(!singularity) {
+            step();
+            steps++;
+            singularity = checkSingularity(); 
+        }
         System.out.println(
-            "2021 Day Eleven - Part Two = "
+            "2021 Day Eleven - Part Two = Singularity after : " + steps 
         );
     }
     
@@ -38,6 +46,17 @@ public class DayEleven extends Day {
                 map[i][j] = new Blinker(value, i, j);
             }
         }
+    }
+    
+    private boolean checkSingularity() {
+        for(int i = 0 ; i < map.length ; i++) {
+            for(int j = 0 ; j < map[i].length ; j++) {
+                if(map[i][j].getValue() != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     
     private void printMap() {

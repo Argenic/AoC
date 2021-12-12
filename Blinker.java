@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AoC.year21;
 
-/**
- *
- * @author simon
- */
 public class Blinker {
     private boolean blinked;
     private int value;
@@ -50,5 +41,4 @@ public class Blinker {
     public int getY() {
         return y;
     }
-
 }
