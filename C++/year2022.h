@@ -3,6 +3,8 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
+
 #include "year.h"
 
 
@@ -12,5 +14,6 @@ public:
     void task1();
     void task2();
     void task3();
-    void task4();
+    void task4(); 
+    int charToInt(char c);
 };
