@@ -1,10 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <algorithm>
-
 #include "year.h"
 
 
@@ -15,5 +10,10 @@ public:
     void task2();
     void task3();
     void task4(); 
-    int charToInt(char c);
+    int rpsToI(char c);
+    void task5();
+    void task6();
+    std::array<int, 52> sToAlphabeth(std::string line);
+    void task7();
+    void task8();
 };
