@@ -188,9 +188,6 @@ void year2022::task6()
 std::array<int, 52> year2022::sToAlphabeth(std::string line)
 {
     std::array<int, 52> alphabet{ };
-    for (int i = 0; i < 52; i++) {
-        alphabet[i] = 0;
-    }
     int index;
     for (int i = 0; i < line.length(); i++)
     {
@@ -206,12 +203,95 @@ std::array<int, 52> year2022::sToAlphabeth(std::string line)
 
 void year2022::task7()
 {
-    std::cout << "Task 3.1 for 2022" << std::endl;
-    std::cout << "Answer : " << std::endl;
+    std::istringstream input(fileToString("year2022_4.txt"));
+    std::string line;
+    int count = 0;
+    while (getline(input, line))
+    {
+        std::array<int,4> points = sToPoints(line);
+        if ((points[0] <= points[2] && points[1] >= points[3]) ||   
+            (points[2] <= points[0] && points[3] >= points[1]))
+        {
+            count++;
+        }
+    }
+    std::cout << "Task 4.1 for 2022" << std::endl;
+    std::cout << "Answer : " << count << std::endl;
 }
 
 void year2022::task8()
 {
-    std::cout << "Task 3.2 for 2022" << std::endl;
+    std::istringstream input(fileToString("year2022_4.txt"));
+    std::string line;
+    int count = 0;
+    while (getline(input, line))
+    {
+        std::array<int, 4> points = sToPoints(line);
+        if (doesLineOverlap(std::array<int, 2>{points[0], points[1]}, std::array<int, 2>{points[2], points[3]}))
+        {
+            count++;
+        }
+    }
+    std::cout << "Task 4.2 for 2022" << std::endl;
+    std::cout << "Answer : " << count << std::endl;
+}
+
+std::array<int, 4> year2022::sToPoints(std::string line)
+{
+    std::array<int, 4> points{ 0 };
+    std::string inputDelimiter = ",";
+    std::string valueDelimiter = "-";
+    std::string token;
+    // Get first int
+    size_t pos = line.find(valueDelimiter);
+    token = line.substr(0, pos);
+    points[0] = stoi(token);
+    line.erase(0, pos + inputDelimiter.length());
+    // Get the second int
+    pos = line.find(inputDelimiter);
+    token = line.substr(0, pos);
+    points[1] = stoi(token);
+    line.erase(0, pos + inputDelimiter.length());
+    // Get the third int
+    pos = line.find(valueDelimiter);
+    token = line.substr(0, pos);
+    points[2] = stoi(token);
+    line.erase(0, pos + inputDelimiter.length());
+    // Get the last int
+    points[3] = stoi(line);
+    return points;
+}
+
+bool year2022::doesLineOverlap(std::array<int, 2> first, std::array<int, 2> second)
+{
+    for (int i = first[0]; i <= first[1]; i++) {                // Rewrite to if check after realizing i read the task wrong
+        if (i >= second[0] && i <= second[1]) {
+            return true;                                      
+        }
+    }
+    return false;
+}
+
+void year2022::task9()
+{
+    std::cout << "Task 5.1 for 2022" << std::endl;
+    std::cout << "Answer : " << std::endl;
+}
+
+void year2022::task10()
+{
+    std::cout << "Task 5.2 for 2022" << std::endl;
+    std::cout << "Answer : " << std::endl;
+}
+
+void year2022::task11()
+{
+    std::cout << "Task 6.1 for 2022" << std::endl;
+    std::cout << "Answer : " << std::endl;
+}
+
+void year2022::task12()
+{
+    std::cout << "Task 6.2 for 2022" << std::endl;
     std::cout << "Answer : " << std::endl;
 }
