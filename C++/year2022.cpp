@@ -123,6 +123,7 @@ int year2022::rpsToI(char c)
             return 2;
         }
     }
+    return -1;
 }
 
 void year2022::task5()
@@ -274,14 +275,73 @@ bool year2022::doesLineOverlap(std::array<int, 2> first, std::array<int, 2> seco
 
 void year2022::task9()
 {
+    std::istringstream input(fileToString("year2022_5.txt"));
+    std::string line;
+    int count = 0;
+    getline(input, line);
+    int size = 9; // magic number....
+    std::vector<std::vector<char>> stacks(size);
+    while (line.at(1) != '1')
+    {
+        for (int i = 0; i < size; i++)
+        {
+            // Over complicate the mapping.
+            char c = line[i * 4 + 1];
+            if (c != ' ')
+            {
+                stacks[i].push_back(c);       
+            }  
+        }
+        getline(input, line);
+    }
+    // Reverse stacks
+    for (int i = 0; i < stacks.size(); i++)
+    {
+        std::reverse(stacks[i].begin(), stacks[i].end());
+    }
+    // Remove empty line
+    getline(input, line);
+    // Execute rearrangement
+    while (getline(input, line))
+    {
+        std::array<int, 3> rearrangement = sToRearrangement(line);
+        for(int i = 0 ; i < rearrangement[0] + 1 ; i++)
+        {
+            char v = stacks[rearrangement[1]].back();
+            stacks[rearrangement[1]].pop_back();
+            stacks[rearrangement[2]].push_back(v);
+        }
+    }
+
+    std::string answer{ "" };
+    for (int i = 0; i < stacks.size(); i++)
+    {
+        answer.push_back(stacks[i].back());
+    }
     std::cout << "Task 5.1 for 2022" << std::endl;
-    std::cout << "Answer : " << std::endl;
+    std::cout << "Answer : " << answer << std::endl;
 }
 
 void year2022::task10()
 {
     std::cout << "Task 5.2 for 2022" << std::endl;
     std::cout << "Answer : " << std::endl;
+}
+
+std::array<int, 3> year2022::sToRearrangement(std::string line)
+{
+    std::string delimiter = " ";
+    size_t pos = 0;
+    std::string token;
+    std::vector<std::string> words;
+    while ((pos = line.find(delimiter)) != std::string::npos)
+    {
+        token = line.substr(0, pos);
+        words.push_back(token);
+        line.erase(0, pos + delimiter.length());
+    }
+    words.push_back(line);
+    return { stoi(words[1]) - 1, stoi(words[3]) - 1, stoi(words[5]) - 1 };
 }
 
 void year2022::task11()

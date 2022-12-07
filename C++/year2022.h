@@ -29,6 +29,7 @@ public:
     // Day 5
     void task9();
     void task10();
+    std::array<int, 3> sToRearrangement(std::string line);
 
     // Day 6
     void task11();
