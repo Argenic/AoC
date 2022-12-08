@@ -324,8 +324,56 @@ void year2022::task9()
 
 void year2022::task10()
 {
+    std::istringstream input(fileToString("year2022_5.txt"));
+    std::string line;
+    int count = 0;
+    getline(input, line);
+    int size = 9; // magic number....
+    std::vector<std::vector<char>> stacks;
+    stacks.resize(size);
+    while (line.at(1) != '1')
+    {
+        for (int i = 0; i < size; i++)
+        {
+            // Over complicate the mapping.
+            char c = line[i * 4 + 1];
+            if (c != ' ')
+            {
+                stacks[i].push_back(c);
+            }
+        }
+        getline(input, line);
+    }
+    // Reverse stacks
+    for (int i = 0; i < stacks.size(); i++)
+    {
+        std::reverse(stacks[i].begin(), stacks[i].end());
+    }
+    // Remove empty line
+    getline(input, line);
+    // Execute rearrangement
+    while (getline(input, line))
+    {
+        std::array<int, 3> rearrangement = sToRearrangement(line);
+        std::string change{ "" };
+        for (int i = 0; i < rearrangement[0] + 1; i++)
+        {
+            change.push_back(stacks[rearrangement[1]].back());
+            stacks[rearrangement[1]].pop_back();
+        }
+        while (change.size() > 0) 
+        {
+            stacks[rearrangement[2]].push_back(change.back());
+            change.pop_back();
+        }
+    }
+    std::string answer{ "" };
+    for (int i = 0; i < stacks.size(); i++)
+    {
+        answer.push_back(stacks[i].back());
+    }
     std::cout << "Task 5.2 for 2022" << std::endl;
-    std::cout << "Answer : " << std::endl;
+    std::cout << "Answer : " << answer << std::endl;
 }
 
 std::array<int, 3> year2022::sToRearrangement(std::string line)
