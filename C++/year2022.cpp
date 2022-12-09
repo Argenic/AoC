@@ -312,7 +312,6 @@ void year2022::task9()
             stacks[rearrangement[2]].push_back(v);
         }
     }
-
     std::string answer{ "" };
     for (int i = 0; i < stacks.size(); i++)
     {
@@ -394,12 +393,85 @@ std::array<int, 3> year2022::sToRearrangement(std::string line)
 
 void year2022::task11()
 {
+    std::istringstream input(fileToString("year2022_6.txt"));
+    std::string line;
+    getline(input, line);
+    int marker = lineToMarker(line, 3);
     std::cout << "Task 6.1 for 2022" << std::endl;
-    std::cout << "Answer : " << std::endl;
+    std::cout << "Answer : " << marker << std::endl;
 }
 
 void year2022::task12()
 {
+    std::istringstream input(fileToString("year2022_6.txt"));
+    std::string line;
+    getline(input, line);
+    int marker = lineToMarker(line, 13);
     std::cout << "Task 6.2 for 2022" << std::endl;
+    std::cout << "Answer : " << marker << std::endl;
+}
+
+int year2022::lineToMarker(std::string line, int offset)
+{
+    int marker{ 0 };
+    for (int i = offset; i < line.length(); i++)
+    {
+        std::string signal = line.substr(i - offset, offset + 1);
+        std::sort(signal.begin(), signal.end());
+        auto it = std::unique(signal.begin(), signal.end());
+        signal.erase(it, signal.end());
+        if (signal.size() == offset + 1) {
+            marker = i + 1;
+            break;
+        }
+    }
+    return marker;
+}
+
+void year2022::task13()
+{
+    std::istringstream input(fileToString("year2022_6.txt"));
+    std::string line;
+    std::cout << "Task 7.1 for 2022" << std::endl;
+    std::cout << "Answer : " << std::endl;
+}
+
+void year2022::task14()
+{
+    std::istringstream input(fileToString("year2022_6.txt"));
+    std::string line;
+    std::cout << "Task 7.2 for 2022" << std::endl;
+    std::cout << "Answer : " << std::endl;
+}
+
+void year2022::task15()
+{
+    std::istringstream input(fileToString("year2022_6.txt"));
+    std::string line;
+    std::cout << "Task 8.1 for 2022" << std::endl;
+    std::cout << "Answer : " << std::endl;
+}
+
+void year2022::task16()
+{
+    std::istringstream input(fileToString("year2022_6.txt"));
+    std::string line;
+    std::cout << "Task 8.2 for 2022" << std::endl;
+    std::cout << "Answer : " << std::endl;
+}
+
+void year2022::task17()
+{
+    std::istringstream input(fileToString("year2022_6.txt"));
+    std::string line;
+    std::cout << "Task 9.1 for 2022" << std::endl;
+    std::cout << "Answer : " << std::endl;
+}
+
+void year2022::task18()
+{
+    std::istringstream input(fileToString("year2022_6.txt"));
+    std::string line;
+    std::cout << "Task 9.2 for 2022" << std::endl;
     std::cout << "Answer : " << std::endl;
 }

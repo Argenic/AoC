@@ -34,4 +34,17 @@ public:
     // Day 6
     void task11();
     void task12();
+    int lineToMarker(std::string line, int offset);
+
+    // Day 7
+    void task13();
+    void task14();
+
+    // Day 8
+    void task15();
+    void task16();
+
+    // Day 9
+    void task17();
+    void task18();
 };
