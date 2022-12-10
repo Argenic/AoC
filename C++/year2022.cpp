@@ -420,7 +420,8 @@ int year2022::lineToMarker(std::string line, int offset)
         std::sort(signal.begin(), signal.end());
         auto it = std::unique(signal.begin(), signal.end());
         signal.erase(it, signal.end());
-        if (signal.size() == offset + 1) {
+        if (signal.size() == offset + 1) 
+        {
             marker = i + 1;
             break;
         }
@@ -430,18 +431,150 @@ int year2022::lineToMarker(std::string line, int offset)
 
 void year2022::task13()
 {
-    std::istringstream input(fileToString("year2022_6.txt"));
-    std::string line;
+    Directory root = buildFileStructure();
+    int count{ 0 };
+    root.loopChildren(&root, &count);
     std::cout << "Task 7.1 for 2022" << std::endl;
-    std::cout << "Answer : " << std::endl;
+    std::cout << "Answer : " << count << std::endl;
 }
 
 void year2022::task14()
 {
-    std::istringstream input(fileToString("year2022_6.txt"));
-    std::string line;
+    Directory root = buildFileStructure();
+    int total = 70000000;
+    int required = 30000000;
+    int used = root.size;
+    int available = total - used;
+    int missing = required - available;
+    int count = total;
+    root.loopChildrenForSingle(&root, &count, missing);
     std::cout << "Task 7.2 for 2022" << std::endl;
-    std::cout << "Answer : " << std::endl;
+    std::cout << "Answer : " << count << std::endl;
+}
+
+year2022::Directory::Directory(std::string n)
+{
+    name = n;
+}
+
+year2022::Directory::Directory(std::string n, Directory* p)
+{
+    parent = p;
+    name = n;
+}
+
+void year2022::Directory::addSize(int file_size)
+{
+    size += file_size;
+    Directory* ptr = parent;
+    while (ptr != nullptr) {
+        ptr->size += file_size;
+        ptr = ptr->parent;
+    }
+}
+
+void year2022::Directory::createChild(std::string n)
+{
+    Directory* child = new Directory(n, this);
+    children.push_back(child);
+}
+
+year2022::Directory* year2022::Directory::getChildByName(std::string n)
+{
+    for (const auto& ptr : children) 
+    {
+        if (ptr->name == n) 
+        {
+            return ptr;
+        }
+    }
+    return this;
+}
+
+void year2022::Directory::loopChildren(Directory* d, int* count) 
+{
+    if (d == nullptr) return;
+    if (d->size < 100000) 
+    {
+        *count += d->size;
+    }
+    for (const auto& child : d->children) 
+    {
+        loopChildren(child, count);
+    }
+}
+
+void year2022::Directory::loopChildrenForSingle(Directory* d, int* smallest, int minimum)
+{
+    if (d == nullptr) return;
+    if (d->size < *smallest && d->size > minimum)
+    {
+        *smallest = d->size;
+    }
+    for (const auto& child : d->children)
+    {
+        loopChildrenForSingle(child, smallest, minimum);
+    }
+}
+
+year2022::Directory year2022::buildFileStructure()
+{
+    std::istringstream input(fileToString("year2022_7.txt"));
+    std::string line;
+    Directory root = Directory("/");
+    Directory* current = &root;
+    while (getline(input, line))
+    {
+        std::vector<std::string> parts = sToCLI(line);
+        // Command
+        if (parts[0] == "$")
+        {
+            if (parts[1] == "cd")
+            {
+                // Go back one directory
+                if (parts[2] == "..")
+                {
+                    current = current->parent;
+                }
+                // Go to directory
+                else
+                {
+                    current = current->getChildByName(parts[2]);
+                }
+            }
+        }
+        // List
+        else
+        {
+            if (parts[0] == "dir")
+            {
+                // Create a directory
+                current->createChild(parts[1]);
+            }
+            else
+            {
+                // Increment directory size
+                current->addSize(stoi(parts[0]));
+            }
+        }
+    }
+    return root;
+}
+
+std::vector<std::string> year2022::sToCLI(std::string line)
+{
+    std::string delimiter = " ";
+    size_t pos = 0;
+    std::string token;
+    std::vector<std::string> parts;
+    while ((pos = line.find(delimiter)) != std::string::npos)
+    {
+        token = line.substr(0, pos);
+        parts.push_back(token);
+        line.erase(0, pos + delimiter.length());
+    }
+    parts.push_back(line);
+    return parts;
 }
 
 void year2022::task15()

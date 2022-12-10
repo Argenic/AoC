@@ -38,7 +38,22 @@ public:
 
     // Day 7
     void task13();
-    void task14();
+    void task14(); 
+    struct Directory {
+        Directory* parent{ };
+        std::vector<Directory*> children{ };
+        int size{ 0 };
+        std::string name;
+        Directory(std::string n);
+        Directory(std::string n, Directory* p);
+        void addSize(int file_size);
+        void createChild(std::string n);        
+        Directory* getChildByName(std::string n);
+        void loopChildren(Directory* d, int* count);
+        void loopChildrenForSingle(Directory* d, int* smallest, int minimum);
+    };
+    std::vector<std::string> sToCLI(std::string line);
+    Directory buildFileStructure();
 
     // Day 8
     void task15();
