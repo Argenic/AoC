@@ -579,23 +579,125 @@ std::vector<std::string> year2022::sToCLI(std::string line)
 
 void year2022::task15()
 {
-    std::istringstream input(fileToString("year2022_6.txt"));
-    std::string line;
+    std::vector<std::vector<int>> map = getTreeHeight();
+    int visible{ 0 };
+    for (int i = 0; i < map.size(); i++)
+    {
+        for (int j = 0; j < map[i].size(); j++)
+        {
+            bool seen = true;
+            int x = j;
+            int y = i;
+            int needle = map[y][x];
+            // UP
+            while (y > 0)
+            {
+                y--;
+                if (needle <= map[y][x])
+                {
+                    seen = false;
+                    break;
+                }
+            }
+            if (seen)
+            {
+                visible++;
+                continue;
+            }
+            // Reset
+            y = i;
+            seen = true;
+            // RIGHT
+            while (x < map[y].size() - 1)
+            {
+                x++;
+                if (needle <= map[y][x])
+                {
+                    seen = false;
+                    break;
+                }
+            }
+            // Mark
+            if (seen)
+            {
+                visible++;
+                continue;
+            }
+            // Reset
+            x = j;
+            seen = true;
+            // DOWN
+            while (y < map.size() - 1)
+            {
+                y++;
+                if (needle <= map[y][x])
+                {
+                    seen = false;
+                    break;
+                }
+            }
+            // Mark
+            if (seen)
+            {
+                visible++;
+                continue;
+            }
+            // Reset
+            y = i;
+            seen = true;
+            // LEFT
+            while (x > 0)
+            {
+                x--;
+                if (needle <= map[y][x])
+                {
+                    seen = false;
+                    break;
+                }
+            }
+            if (seen)
+            {
+                visible++;
+                continue;
+            }
+        }
+    }
+
     std::cout << "Task 8.1 for 2022" << std::endl;
-    std::cout << "Answer : " << std::endl;
+    std::cout << "Answer : " << visible << std::endl;
 }
 
 void year2022::task16()
 {
-    std::istringstream input(fileToString("year2022_6.txt"));
+    std::istringstream input(fileToString("year2022_8.txt"));
     std::string line;
     std::cout << "Task 8.2 for 2022" << std::endl;
     std::cout << "Answer : " << std::endl;
 }
 
+std::vector<std::vector<int>> year2022::getTreeHeight()
+{
+    std::istringstream input(fileToString("year2022_8.txt"));
+    std::string line;
+    std::vector<std::vector<int>> map{ };
+    int line_count = 0;
+    while (getline(input, line))
+    {
+        std::vector<int> row{};
+        map.push_back(row);
+        for (int i = 0; i < line.length(); i++)
+        {
+            int value = stoi(std::string(1, line[i]));
+            map[line_count].push_back(stoi(std::string(1, line[i])));
+        }
+        line_count++;
+    }
+    return map;
+}
+
 void year2022::task17()
 {
-    std::istringstream input(fileToString("year2022_6.txt"));
+    std::istringstream input(fileToString("year2022_9.txt"));
     std::string line;
     std::cout << "Task 9.1 for 2022" << std::endl;
     std::cout << "Answer : " << std::endl;
@@ -603,7 +705,7 @@ void year2022::task17()
 
 void year2022::task18()
 {
-    std::istringstream input(fileToString("year2022_6.txt"));
+    std::istringstream input(fileToString("year2022_9.txt"));
     std::string line;
     std::cout << "Task 9.2 for 2022" << std::endl;
     std::cout << "Answer : " << std::endl;

@@ -58,6 +58,7 @@ public:
     // Day 8
     void task15();
     void task16();
+    std::vector<std::vector<int>> getTreeHeight();
 
     // Day 9
     void task17();
