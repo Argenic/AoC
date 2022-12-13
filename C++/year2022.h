@@ -63,4 +63,46 @@ public:
     // Day 9
     void task17();
     void task18();
+    std::array<std::string, 2> sToInstructions(std::string line);
+
+    // Day 10
+    void task19();
+    void task20();
+
+    // Day 11
+    void task21();
+    void task22();
+
+    // Day 12
+    void task23();
+    void task24();
+
+    // Day 13
+    void task25();
+    void task26();
+
+    // Day 14
+    void task27();
+    void task28();
+    /*
+    // Day 15
+    void task17();
+    void task18();
+
+    // Day 16
+    void task17();
+    void task18();
+
+    // Day 17
+    void task17();
+    void task18();
+
+    // Day 18
+    void task17();
+    void task18();
+
+    // Day 19
+    void task17();
+    void task18();
+    */
 };
