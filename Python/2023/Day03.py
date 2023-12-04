@@ -17,7 +17,7 @@ test_lines = """467..114..
 
 lines = input_lines
 
-# Translate the input to numbers and gears
+# Translate the input to numbers
 numbers = []
 for current_line in range(len(lines)):
     number = {}
